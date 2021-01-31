@@ -1,10 +1,22 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+@font-face {
+   
+    font-family: FredokaOne;
+    src: url(/lib/fonts/FredokaOne-Regular.ttf);
+}
+
+#logo {
+    font-family: 'FredokaOne', cursive;
+}
+
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
@@ -68,4 +80,45 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+
 }
+
+/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+.row.content {
+    height: 1500px
+}
+
+/* Set gray background color and 100% height */
+#maincontainer {
+margin-top:100px;
+}
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    height: 50px;
+}
+body {
+    min-height: 400px;
+    margin-bottom: 100px;
+    clear: both;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+
+    .row.content {
+        height: auto;
+    }
+}
+
+#sidenav {
+    background-color: #f1f1f1;
+    min-height: 100%;
+}
+

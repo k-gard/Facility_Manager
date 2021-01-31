@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -20,12 +21,14 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Tasks
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Task.ToListAsync());
         }
 
         // GET: Tasks/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Tasks/Create
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("Id,Description,Category")] Models.Task task)
         {
             if (ModelState.IsValid)
@@ -86,6 +91,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Category")] Models.Task task)
         {
             if (id != task.Id)
@@ -117,6 +123,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Tasks/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +144,7 @@ namespace FacilityManager.Controllers
         // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Task.FindAsync(id);

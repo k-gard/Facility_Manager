@@ -4,12 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container-fluid overflow-auto">
+    <img class="mx-auto d-block" src="~/lib/icons/008-settings.svg" width="50" height="60" />
+    <h1 class="text-center">Tasks</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="text-center">
+    <a asp-action="Create">Add new <img class="mx-auto" src="~/lib/icons/add.svg" width="20" height="20" /></a>
 </p>
-<table class="table">
+<table id="table" class="table">
     <thead>
         <tr>
             <th>
@@ -31,11 +33,19 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id"> <img class="mx-auto" src="~/lib/icons/001-pencil.svg" width="20" height="20" /></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><img class="mx-auto" src="~/lib/icons/004-info-1.svg" width="20" height="20" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><img class="mx-auto" src="~/lib/icons/005-garbage.svg" width="20" height="20" /></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+    </div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+     $('#table').DataTable( );
+
+        });</script>

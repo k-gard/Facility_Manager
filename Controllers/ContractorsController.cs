@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -20,6 +21,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contractors
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Contractor.Include(c => c.Company);
@@ -27,6 +29,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contractors/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contractors/Create
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> CreateAsync()
         {
             var companies =await _context.Company.ToListAsync();
@@ -62,6 +66,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("CompanyId")] ContractorViewModel contractor)
         {
             if (ModelState.IsValid)
@@ -78,6 +83,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contractors/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,8 +96,15 @@ namespace FacilityManager.Controllers
             {
                 return NotFound();
             }
-            ViewData["ContractorId"] = new SelectList(_context.Company, "id", "id", contractor.ContractorId);
-            return View(contractor);
+            var companies = await _context.Company.ToListAsync();
+            var companiesList = new List<SelectListItem>();
+            foreach (Company c in companies)
+            {
+                companiesList.Add(new SelectListItem { Value = c.Id.ToString(), Text = c.Name.ToString() });
+            }
+            ViewBag.Companies = companiesList;
+           // ViewData["ContractorId"] = new SelectList(_context.Company, "id", "id", contractor.ContractorId);
+            return View(/*contractor*/);
         }
 
         // POST: Contractors/Edit/5
@@ -99,6 +112,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("ContractorId")] Contractor contractor)
         {
             if (id != contractor.ContractorId)
@@ -131,6 +145,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contractors/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -152,6 +167,7 @@ namespace FacilityManager.Controllers
         // POST: Contractors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var contractor = await _context.Contractor.FindAsync(id);

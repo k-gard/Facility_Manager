@@ -1,57 +1,223 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Employee> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    if (SignInManager.Context.User.IsInRole("Admin"))
+    {
+        <div class="container h-100 align-items-center">
+            <div class="row align-items-center">
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-company.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        
-        <div class="container-md">
+                    </div>
+                </div>
+                <div class="col-sm-4">
 
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/004-organization.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Departments</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
 
-
-
-
-
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Departments</a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Buildings" asp-action="Index">Buildings</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">Facilities</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tasks" asp-action="Index">Tasks</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="WorkOrders" asp-action="Index">Work Orders</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">Contracts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Contractors" asp-action="Index">Contractors</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">Facilities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Equipments" asp-action="Index">Equipment</a>
-                </li>
-            </ul>
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/002-building.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Buildings" asp-action="Index">Buildings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-4">
 
 
-</div>
-    </div>
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/003-hospital-1.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">Facilities</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/008-settings.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Tasks" asp-action="Index">Tasks</a>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-to-do-list.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="WorkOrders" asp-action="Index">Work Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 align-items-center">
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/009-contract.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">Contracts</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+
+                        <img class="mx-auto" src="~/lib/icons/010-contractor.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Contractors" asp-action="Index">Contractors</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/006-employee.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register Employee</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/005-generator.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Equipment" asp-action="Index">Equipment</a>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-graph.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Reports</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    if (SignInManager.Context.User.IsInRole("Manager"))
+    {
+        <div class="container h-100 align-items-center">
+            <div class="row align-items-center">
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-company.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/004-organization.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Departments</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/002-building.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Buildings" asp-action="Index">Buildings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-4">
+
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/003-hospital-1.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Facilities" asp-action="Index">Facilities</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/008-settings.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Tasks" asp-action="Index">Tasks</a>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-to-do-list.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="WorkOrders" asp-action="Index">Work Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 align-items-center">
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/009-contract.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">Contracts</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+
+                        <img class="mx-auto" src="~/lib/icons/010-contractor.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Contractors" asp-action="Index">Contractors</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/005-generator.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Equipment" asp-action="Index">Equipment</a>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="row mt-2">
+                
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-graph.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Reports</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    if (SignInManager.Context.User.IsInRole("Technitian"))
+    {
+        <div class="container h-100 align-items-center">
+            
+            <div class="row mt-2">
+              
+                <div class="col-sm-4">
+
+                    <div class="card text-center">
+                        <img class="mx-auto" src="~/lib/icons/001-to-do-list.svg" width="50" height="60" />
+                        <a class="nav-link text-dark" asp-area="" asp-controller="WorkOrders" asp-action="Index">Work Orders</a>
+                    </div>
+                </div>
+            </div>
+            
+          
+
+        </div>
+
+    }
+}

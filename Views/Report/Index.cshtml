@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FacilityManager.Models.Report>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <img class="mx-auto d-block" src="~/lib/icons/001-graph.svg" width="50" height="60" />
+<h1 class="text-center">Reports</h1>
+
+<p class="text-center">
+    <a asp-action="Create">Create new <img class="mx-auto" src="~/lib/icons/add.svg" width="20" height="20" /></a>
+</p>
+<table id="table" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalWorkOrders)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalWorkHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalWorkCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fromDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.toDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalWorkOrders)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalWorkHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalWorkCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fromDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.toDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"> <img class="mx-auto" src="~/lib/icons/001-pencil.svg" width="20" height="20" /></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><img class="mx-auto" src="~/lib/icons/004-info-1.svg" width="20" height="20" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><img class="mx-auto" src="~/lib/icons/005-garbage.svg" width="20" height="20" /></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+    </div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+     $('#table').DataTable( );
+
+        });</script>

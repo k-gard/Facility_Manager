@@ -1,34 +1,249 @@
-﻿@model FacilityManager.Models.WorkOrder
+﻿@model FacilityManager.Models.WorkOrderViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
+<!--
+<img class="mx-auto d-block" src="~/lib/icons/001-company.svg" width="50" height="60" />
+<h4 class="text-center">Edit Department</h4>
 
-<h1>Edit</h1>
-
-<h4>WorkOrder</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Cost" class="control-label"></label>
+                    <input asp-for="Cost" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label asp-for="Building" class="control-label"></label>
+                    <select asp-for="Building" class="form-control" asp-items="ViewBag.Buildings">
+                        <option id="b_selected0" selected>Choose Building</option>
+                    </select>
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="employee_list">
+                    <label asp-for="Employee" class="control-label" id="employee"></label>
+                    <select id="c_select" asp-for="Employee[0]" class="form-control " asp-items="ViewBag.Employees">
+                        <option selected value="0">Choose Employee</option>
+                    </select>
+                </div>
+
+                <div class="text-center"><button type="button" id="addEmployee" class="btn btn-primary">Add</button></div>
+
+
+                <div class="form-group" id="contactor_list">
+                    <label asp-for="Contractor" class="control-label" id="contractor"></label>
+                    <select id="c_select" asp-for="Contractor[0]" class="form-control " asp-items="ViewBag.Contractors">
+                        <option selected value="0">Choose Contractor</option>
+                    </select>
+
+                </div>
+                <div class="text-center"><button type="button" id="addContractor" class="btn btn-primary">Add</button></div>
+
+                <div class="form-group">
+                    <label asp-for="Equipment" class="control-label" id="task"></label>
+                    <select asp-for="Equipment" class="form-control " asp-items="ViewBag.Equipment">
+                        <option selected value="0">Choose Equipment</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group" id="task_list">
+                    <label asp-for="Tasks" class="control-label" id="task"></label>
+                    <select id="c_select" asp-for="Tasks[0]" class="form-control " asp-items="ViewBag.Tasks">
+                        <option selected value="0">Choose Task</option>
+                    </select>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="text-center form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="text-center">
+                <a asp-action="Index">Back to List</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+    -->
+
+
+
+<img class="mx-auto d-block" src="~/lib/icons/001-to-do-list.svg" width="50" height="60" />
+<h4 class="text-center">Edit Work Order</h4>
+<hr />
+<div class="container">
+
+
+    <div class="row">
+
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+            <h1>Create</h1>
+
+            <h4>WorkOrder</h4>
+            <hr />
+
+            <div class="">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Building" class="control-label"></label>
+                        <select asp-for="Building" class="form-control" asp-items="ViewBag.Buildings">
+                            <option id="b_selected0" selected>Choose Building</option>
+                        </select>
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                    @for (int i = 0; i < Model.EmployeeNames.Count; i++)
+                    {
+                        <div class="form-group" id="employee_list">
+                            <label asp-for="Employee" class="control-label" id="employee"></label>
+                            <select id="c_select" asp-for="Employee[@i]" class="form-control " asp-items="ViewBag.Employees">
+                                <option selected value="0">@Model.EmployeeNames.ElementAt(i)</option>
+                            </select>
+                        </div>
+                    }
+                    <div class="text-center"><button type="button" id="addEmployee" class="btn btn-primary">Add</button></div>
+
+
+                    <div class="form-group" id="contactor_list">
+                        <label asp-for="Contractor" class="control-label" id="contractor"></label>
+                        <select id="c_select" asp-for="Contractor[0]" class="form-control " asp-items="ViewBag.Contractors">
+                            <option selected value="0">Choose Contractor</option>
+                        </select>
+
+                    </div>
+                    <div class="text-center"><button type="button" id="addContractor" class="btn btn-primary">Add</button></div>
+
+                    <div class="form-group">
+                        <label asp-for="Equipment" class="control-label" id="task"></label>
+                        <select asp-for="Equipment" class="form-control " asp-items="ViewBag.Equipment">
+                            <option selected value="0">Choose Equipment</option>
+                        </select>
+
+                    </div>
+                    @for (int i = 0; i < Model.TasksName.Count; i++)
+                    {
+                        <div class="form-group" id="task_list">
+                            <label asp-for="Tasks" class="control-label" id="task"></label>
+                            <select id="c_select" asp-for="Tasks[0]" class="form-control " asp-items="ViewBag.Tasks">
+                                <option selected value="0">@Model.TasksName.ElementAt(i)</option>
+                            </select>
+
+                        </div>
+                    }
+
+                    <div class="text-center"><button type="button" id="addTask" class="btn btn-primary">Add</button></div>
+
+                    <div class="form-group">
+                        <label asp-for="WorkStart" class="control-label"></label>
+                        <input asp-for="WorkStart" type="datetime-local" data-date-format="mm/dd/yyyy" class="form-control" />
+                        <span asp-validation-for="WorkStart" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkEnd" class="control-label"></label>
+                        <input asp-for="WorkEnd" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="WorkEnd" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label asp-for="Cost" class="control-label"></label>
+                        <input asp-for="Cost" class="form-control" />
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <a asp-action="Index">Back to List</a>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+
+                var ecount = 0;
+                var ccount = 0;
+                var tcount = 0;
+
+                var a = $("#task_list").html();
+                $("#addTask").click(function () {
+                    tcount++;
+                    var k = a.replace("Task[0]", "Task[" + tcount + "]");
+                    $("#task_list").append(k);
+                    tcount++;
+
+                });
+
+
+                var e = $("#employee_list").html();
+                $("#addEmployee").click(function () {
+                    ecount++;
+                    var k = e.replace("Employee[0]", "Employee[" + ecount + "]");
+                    $("#employee_list").append(k);
+                    ecount++;
+
+                });
+
+                var w = $("#contactor_list").html();
+                $("#addContractor").click(function () {
+                    ccount++;
+                    var t = w.replace("Contractor[0]", "Contractor[" + ccount + "]");
+                    $("#contactor_list").append(t);
+                    ccount++;
+                });
+
+            });
+    </script>
 }

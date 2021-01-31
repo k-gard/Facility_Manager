@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -20,12 +21,14 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Companies
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Company.ToListAsync());
         }
 
         // GET: Companies/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Companies/Create
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("id,Name,Afm,AddressStreet,AddressNumber,AddressPostCode,PhoneNumber,Email")] Company company)
         {
             if (ModelState.IsValid)
@@ -66,6 +71,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Companies/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("id,Name,Afm,AddressStreet,AddressNumber,AddressPostCode,PhoneNumber,Email")] Company company)
         {
             if (id != company.Id)
@@ -117,6 +124,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Companies/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +145,7 @@ namespace FacilityManager.Controllers
         // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var company = await _context.Company.FindAsync(id);

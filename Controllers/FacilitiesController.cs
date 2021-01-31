@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -20,12 +21,14 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Facilities
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Facility.ToListAsync());
         }
 
         // GET: Facilities/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,15 +47,28 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Facilities/Create
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create()
         {
             var companies = await _context.Company.ToListAsync();
             var CompaniesList = new List<SelectListItem>();
+            var CompaniesDictionary = new SortedDictionary<String, int>();
+            
             foreach (Company u in companies)
             {
-                CompaniesList.Add(new SelectListItem() { Value = u.Id.ToString(), Text = u.Name });
+                CompaniesDictionary.Add(u.Name, u.Id);
+                
+                
             }
-            ViewBag.Companies = CompaniesList; 
+            CompaniesDictionary.OrderBy(kvp => kvp.Key);
+            foreach (KeyValuePair<String, int> kvp in CompaniesDictionary) {
+                CompaniesList.Add(new SelectListItem() { Value = kvp.Value.ToString(), Text = kvp.Key });
+            }
+            // CompaniesList.Add(new SelectListItem() { Value = u.Id.ToString(), Text = u.Name });
+
+            ViewBag.Companies = CompaniesList;
+       //     ViewBag.CompaniesNames = CompaniesNamesList;
+        //    ViewBag.CompaniesIdsList = CompaniesIdsList;
             return View();
         }
 
@@ -61,6 +77,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("Id,FacilityName,CompanyId")] FacilitiesViewModel facility)
         {
             if (ModelState.IsValid)
@@ -80,6 +97,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Facilities/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,6 +118,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FacilityName")] Facility facility)
         {
             if (id != facility.Id)
@@ -131,6 +150,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Facilities/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,6 +171,7 @@ namespace FacilityManager.Controllers
         // POST: Facilities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var facility = await _context.Facility.FindAsync(id);

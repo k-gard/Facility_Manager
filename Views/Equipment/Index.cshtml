@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FacilityManager.Models.Equipment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+<img class="mx-auto d-block" src="~/lib/icons/005-generator.svg" width="50" height="60" />
+<h1 class="text-center">Equipment</h1>
+
+<p class="text-center">
+    <a asp-action="Create">Add new <img class="mx-auto" src="~/lib/icons/add.svg" width="20" height="20" /></a>
+</p>
+<table id="table" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrequencyType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceFrequency)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrequencyType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintenanceFrequency)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+    </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+     $('#table').DataTable( );
+
+        });</script>

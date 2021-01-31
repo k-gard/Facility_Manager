@@ -5,6 +5,23 @@
     <UserSecretsId>aspnet-FacilityManager-9DC03478-15F9-4114-9FD0-350B0F3462C8</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200718173150_180720.cs" />
+    <Compile Remove="Migrations\20200718173150_180720.Designer.cs" />
+    <Compile Remove="Migrations\20200728131516_addReports.cs" />
+    <Compile Remove="Migrations\20200728131516_addReports.Designer.cs" />
+    <Compile Remove="Migrations\20200728141840_addReports.cs" />
+    <Compile Remove="Migrations\20200728141840_addReports.Designer.cs" />
+    <Compile Remove="Migrations\20200729071334_reportsUpdate2.cs" />
+    <Compile Remove="Migrations\20200729071334_reportsUpdate2.Designer.cs" />
+    <Compile Remove="Migrations\20200729072648_290720.cs" />
+    <Compile Remove="Migrations\20200729072648_290720.Designer.cs" />
+    <Compile Remove="Migrations\20200729073151_290720.cs" />
+    <Compile Remove="Migrations\20200729073151_290720.Designer.cs" />
+    <Compile Remove="Migrations\20200729073300_290720.cs" />
+    <Compile Remove="Migrations\20200729073300_290720.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />

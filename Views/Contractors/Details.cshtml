@@ -3,17 +3,22 @@
 @{
     ViewData["Title"] = "Details";
 }
+<img class="mx-auto d-block" src="~/lib/icons/010-contractor.svg" width="50" height="60" />
+<h4 class="text-center">Contractor Details</h4>
+<hr />
 
-<h1>Details</h1>
 
-<div>
-    <h4>Contractor</h4>
+<div class="container">
+   <div>
     <hr />
+       <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Company)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Company.Id)
         </dd>
     </dl>
@@ -22,3 +27,7 @@
     <a asp-action="Edit" asp-route-id="@Model.ContractorId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+</div>
+</div>
+</div>
+

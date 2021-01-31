@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -20,12 +21,14 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Departments
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Department.ToListAsync());
         }
 
         // GET: Departments/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Departments/Create
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
 
@@ -65,6 +69,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Department department)
         {
             if (ModelState.IsValid)
@@ -80,6 +85,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Departments/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,6 +106,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Department department)
         {
             if (id != department.Id)
@@ -131,6 +138,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Departments/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,6 +159,7 @@ namespace FacilityManager.Controllers
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var department = await _context.Department.FindAsync(id);

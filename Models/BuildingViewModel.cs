@@ -15,5 +15,7 @@ namespace FacilityManager.Models
         [Display(Name = "Owner : Facility")]
         public int FacilityId { get; set; }
 
+        public int Equipment;
+
     }
 }

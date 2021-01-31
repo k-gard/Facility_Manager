@@ -216,6 +216,41 @@ namespace FacilityManager.Migrations
                     b.ToTable("Facility");
                 });
 
+            modelBuilder.Entity("FacilityManager.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalCost")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TotalWorkCost")
+                        .HasColumnType("real");
+
+                    b.Property<float>("TotalWorkHours")
+                        .HasColumnType("real");
+
+                    b.Property<int>("TotalWorkOrders")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("fromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("toDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Report");
+                });
+
             modelBuilder.Entity("FacilityManager.Models.Task", b =>
                 {
                     b.Property<int>("Id")
@@ -247,6 +282,9 @@ namespace FacilityManager.Migrations
                     b.Property<long>("Cost")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("EquipmentId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("WorkEnd")
                         .HasColumnType("datetime2");
 
@@ -257,7 +295,24 @@ namespace FacilityManager.Migrations
 
                     b.HasIndex("BuildingId");
 
+                    b.HasIndex("EquipmentId");
+
                     b.ToTable("WorkOrder");
+                });
+
+            modelBuilder.Entity("FacilityManager.Models.WorkOrderEmployee", b =>
+                {
+                    b.Property<int>("WorkOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("WorkOrderId", "EmployeeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("WorkOrderEmployee");
                 });
 
             modelBuilder.Entity("FacilityManager.Models.WorkOrderTask", b =>
@@ -304,22 +359,22 @@ namespace FacilityManager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7ac5c784-d3f8-4d71-9267-efb2043de63e",
-                            ConcurrencyStamp = "8848bd97-bff1-4fcc-bfad-3aa38b0ca436",
+                            Id = "b1b771e3-7d16-49e1-aee4-c228ad7b5a7e",
+                            ConcurrencyStamp = "85214442-dad7-44bd-a98c-2f80c1d79d29",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "af2fe463-8a46-4b27-bc43-3c5050e886bf",
-                            ConcurrencyStamp = "cdfba392-b1ad-4076-9b0e-08791b8cf942",
+                            Id = "037c8c2a-38ab-4ee1-96d8-d753765c0c84",
+                            ConcurrencyStamp = "2d4ab07a-1e1e-4525-92a0-2fbf19bea32b",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "fb1b1be9-2e20-45c1-9eb4-3733f7e7cde1",
-                            ConcurrencyStamp = "2d4b6a7e-9b33-4c85-863f-cc9f2d066ed2",
+                            Id = "9f1a87cf-e679-4c00-8a51-d3c3d5295535",
+                            ConcurrencyStamp = "3341e4b8-e943-4431-8871-7fada16e94e6",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -523,12 +578,7 @@ namespace FacilityManager.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WorkOrderId")
-                        .HasColumnType("int");
-
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("WorkOrderId");
 
                     b.HasDiscriminator().HasValue("Employee");
                 });
@@ -608,11 +658,37 @@ namespace FacilityManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("FacilityManager.Models.Report", b =>
+                {
+                    b.HasOne("FacilityManager.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+                });
+
             modelBuilder.Entity("FacilityManager.Models.WorkOrder", b =>
                 {
                     b.HasOne("FacilityManager.Models.Building", "Building")
                         .WithMany()
                         .HasForeignKey("BuildingId");
+
+                    b.HasOne("FacilityManager.Models.Equipment", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId");
+                });
+
+            modelBuilder.Entity("FacilityManager.Models.WorkOrderEmployee", b =>
+                {
+                    b.HasOne("FacilityManager.Models.Employee", "Employee")
+                        .WithMany("WorkOrders")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FacilityManager.Models.WorkOrder", "WorkOrder")
+                        .WithMany("Employees")
+                        .HasForeignKey("WorkOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FacilityManager.Models.WorkOrderTask", b =>
@@ -687,10 +763,6 @@ namespace FacilityManager.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FacilityManager.Models.WorkOrder", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("WorkOrderId");
                 });
 #pragma warning restore 612, 618
         }

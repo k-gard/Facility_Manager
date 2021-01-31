@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -18,6 +19,8 @@ namespace FacilityManager.Controllers
             _logger = logger;
         }
 
+
+        [Authorize(Roles = "Admin,Manager,Technitian")]
         public IActionResult Index()
         {
             return View();

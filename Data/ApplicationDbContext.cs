@@ -26,6 +26,7 @@ namespace FacilityManager.Data
 
         public DbSet<Employee> Employee { get; set; }
 
+        public DbSet<Report> Report { get; set; }
 
         public DbSet<Company> Company { get; set; }
 
@@ -68,6 +69,19 @@ namespace FacilityManager.Data
                 .HasOne(w => w.Task)
                 .WithMany(t => t.WorkOrders)
                 .HasForeignKey(w => w.TaskId);
+
+
+            modelBuilder.Entity<WorkOrderEmployee>()
+               .HasKey(k => new { k.WorkOrderId, k.EmployeeId });
+            modelBuilder.Entity<WorkOrderEmployee>()
+                .HasOne(w => w.WorkOrder)
+                .WithMany(e => e.Employees)
+                .HasForeignKey(w => w.WorkOrderId);
+            modelBuilder.Entity<WorkOrderEmployee>()
+                .HasOne(w => w.Employee)
+                .WithMany(t => t.WorkOrders)
+                .HasForeignKey(w => w.EmployeeId);
+
 
 
 
@@ -131,12 +145,18 @@ namespace FacilityManager.Data
 
             modelBuilder.Entity<IdentityRole>().HasData(
                     new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN" },
-                    new IdentityRole() { Name = "Employee", NormalizedName = "EMPLOYEE" },
+                    new IdentityRole() { Name = "Technitian", NormalizedName = "TECHNITIAN" },
                     new IdentityRole() { Name = "Manager", NormalizedName = "MANAGER" }
                 );
+
+
+         
+
+
+
         }
 
-
+        
 
 
 

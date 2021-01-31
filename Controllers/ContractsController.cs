@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilityManager.Data;
 using FacilityManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FacilityManager.Controllers
 {
@@ -14,18 +15,21 @@ namespace FacilityManager.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+
         public ContractsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Contracts
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Contract.ToListAsync());
         }
 
         // GET: Contracts/Details/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +48,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contracts/Create
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create()
         {
             var cont = await _context.Contractor.Include(c => c.Company).ToListAsync();
@@ -61,6 +66,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("Id,Name,StartingDate,EndingDate,AwardAmount,Contractor1,Contractor2")] ContractViewModel contract)
         {
             if (ModelState.IsValid)
@@ -96,6 +102,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contracts/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,6 +123,7 @@ namespace FacilityManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartingDate,EndingDate,AwardAmount")] Contract contract)
         {
             if (id != contract.Id)
@@ -147,6 +155,7 @@ namespace FacilityManager.Controllers
         }
 
         // GET: Contracts/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -167,6 +176,7 @@ namespace FacilityManager.Controllers
         // POST: Contracts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var contract = await _context.Contract.FindAsync(id);

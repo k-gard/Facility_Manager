@@ -12,7 +12,7 @@ namespace FacilityManager.Models
         public String FirstName { get; set; }
         public String LastName { get; set; }
 
-  
+        public ICollection<WorkOrderEmployee> WorkOrders { get; set; }
 
         public Department Department { get; set; }
         public String EmployeeType { get; set; }
